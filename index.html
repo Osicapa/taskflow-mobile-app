@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#4F46E5" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <title>Taskly — Your Daily Task Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; }
+      html, body, #root {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background: #E8EAF6;
+        font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      }
+      :root {
+        --indigo: #4F46E5;
+        --indigo-light: #EEF2FF;
+        --indigo-dark: #3730A3;
+        --green: #10B981;
+        --red: #EF4444;
+        --bg: #F9FAFB;
+        --surface: #F3F4F6;
+        --border: #E5E7EB;
+        --text: #111827;
+        --muted: #6B7280;
+        --subtle: #9CA3AF;
+      }
+
+      /* Scrollbar hiding */
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+      /* Custom checkbox */
+      .task-checkbox {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 22px;
+        height: 22px;
+        border: 2px solid #D1D5DB;
+        border-radius: 50%;
+        cursor: pointer;
+        position: relative;
+        flex-shrink: 0;
+        transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        background: white;
+      }
+      .task-checkbox:checked {
+        background: #10B981;
+        border-color: #10B981;
+      }
+      .task-checkbox:checked::after {
+        content: '';
+        position: absolute;
+        left: 5px;
+        top: 2px;
+        width: 8px;
+        height: 12px;
+        border: 2px solid white;
+        border-top: none;
+        border-left: none;
+        transform: rotate(45deg);
+      }
+      .task-checkbox:not(:checked):hover {
+        border-color: #4F46E5;
+        transform: scale(1.1);
+      }
+
+      /* Bottom sheet animation */
+      .sheet-overlay {
+        animation: fadeIn 0.25s ease;
+      }
+      .sheet-content {
+        animation: slideUp 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      @keyframes slideUp {
+        from { transform: translateY(100%); }
+        to { transform: translateY(0); }
+      }
+      @keyframes slideDown {
+        from { transform: translateY(0); }
+        to { transform: translateY(100%); }
+      }
+      .sheet-exit {
+        animation: slideDown 0.25s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+      }
+
+      /* Task item swipe */
+      .task-item {
+        transition: transform 0.2s ease;
+      }
+
+      /* FAB pulse */
+      .fab-pulse {
+        animation: fabPulse 2s infinite;
+      }
+      @keyframes fabPulse {
+        0%, 100% { box-shadow: 0 8px 25px rgba(79,70,229,0.4); }
+        50% { box-shadow: 0 8px 35px rgba(79,70,229,0.6); }
+      }
+
+      /* Priority dot pulse */
+      .priority-high { color: #EF4444; }
+      .priority-medium { color: #F97316; }
+      .priority-low { color: #3B82F6; }
+
+      /* Nav active indicator */
+      .nav-active {
+        color: #4F46E5;
+        position: relative;
+      }
+
+      /* Donut chart */
+      .donut-ring {
+        transform: rotate(-90deg);
+        transform-origin: 50% 50%;
+      }
+
+      /* Strikethrough animation */
+      .done-text {
+        text-decoration: line-through;
+        color: #9CA3AF;
+      }
+
+      /* Category pill colors */
+      .cat-work { background: #EEF2FF; color: #4F46E5; }
+      .cat-personal { background: #FDF2F8; color: #EC4899; }
+      .cat-health { background: #ECFDF5; color: #10B981; }
+      .cat-shopping { background: #FFFBEB; color: #F59E0B; }
+      .cat-other { background: #F9FAFB; color: #6B7280; }
+
+      /* Focus ring */
+      input:focus, textarea:focus, select:focus, button:focus {
+        outline: 2px solid #4F46E5;
+        outline-offset: 2px;
+      }
+
+      /* Smooth transitions */
+      .screen-enter {
+        animation: screenEnter 0.25s ease;
+      }
+      @keyframes screenEnter {
+        from { opacity: 0; transform: translateY(8px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      /* Stat cards */
+      .stat-card {
+        min-width: 100px;
+      }
+
+      /* Progress bar */
+      .progress-fill {
+        transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      /* Swipe delete reveal */
+      .delete-reveal {
+        transition: all 0.2s ease;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
